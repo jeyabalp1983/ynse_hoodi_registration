@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YN Cricket Academy (Hoodi) - Admin</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:linear-gradient(135deg,#0a2f1f,#1b5e20);font-family:'Segoe UI',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+        .container{background:#fff;border-radius:2rem;padding:2rem;max-width:600px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,0.5);border:3px solid #d4af37}
+        h1{text-align:center;color:#0a2f1f;font-size:1.5rem}
+        h2{text-align:center;color:#c41e3a;font-size:.9rem;border-bottom:2px dashed #d4af37;padding-bottom:.5rem;margin-bottom:1.5rem}
+        .section{background:#f9f9f9;border-radius:1rem;padding:1.2rem;margin-bottom:1rem;border:1px solid #ddd}
+        .section h3{color:#1b5e20;margin-bottom:.8rem;font-size:1rem}
+        .upload-circle{width:120px;height:120px;border-radius:50%;border:4px solid #d4af37;margin:0 auto 1rem;background:#0a2f1f;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;position:relative}
+        .upload-circle img{width:100%;height:100%;object-fit:cover}
+        .upload-circle span{font-size:3rem;color:#d4af37}
+        .upload-hint{position:absolute;bottom:2px;right:2px;background:#d4af37;color:#0a2f1f;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;border:2px solid #0a2f1f}
+        .scanner-box{border:2px dashed #d4af37;border-radius:1rem;padding:1.5rem;text-align:center;background:#fffef7;cursor:pointer;margin:0 auto 1rem}
+        .scanner-preview{display:none}
+        .scanner-preview img{max-width:100%;max-height:200px;border-radius:.5rem;border:2px solid #25D366}
+        .btn{padding:.6rem 1.2rem;border-radius:2rem;border:none;cursor:pointer;font-weight:700;font-size:.8rem;margin:.2rem}
+        .btn:hover{filter:brightness(1.1)}
+        .btn-gold{background:#d4af37;color:#0a2f1f}
+        .btn-green{background:#25D366;color:#fff}
+        .btn-red{background:#c41e3a;color:#fff}
+        .btn-blue{background:#2196F3;color:#fff}
+        .btn-center{text-align:center;margin-top:.5rem}
+        .msg{background:#e8f5e9;color:#2e7d32;padding:.7rem;border-radius:1rem;text-align:center;font-weight:600;display:none;margin-top:.5rem;font-size:.85rem}
+        .msg.show{display:block}
+        .row{display:flex;justify-content:space-between;align-items:center;padding:.4rem 0;border-bottom:1px solid #eee;font-size:.8rem}
+        .badge{padding:.2rem .7rem;border-radius:1rem;font-size:.7rem;font-weight:700}
+        .badge-green{background:#e8f5e9;color:#2e7d32}
+        .badge-yellow{background:#fff3cd;color:#856404}
+        input[type=text]{width:100%;padding:.7rem 1rem;border:2px solid #ddd;border-radius:1.5rem;font-size:.85rem;margin-top:.3rem}
+        input:focus{border-color:#d4af37;outline:none}
+        label{font-weight:600;color:#333;font-size:.8rem;display:block;margin-top:.5rem}
+        .link-box{background:#0a2f1f;color:#00ff41;padding:.7rem;border-radius:1rem;text-align:center;font-family:'Courier New',monospace;word-break:break-all;font-size:.75rem}
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🏏 YN CRICKET ACADEMY (HOODI)</h1>
+    <h2>🔧 Admin Control Panel</h2>
+
+    <div class="section"><h3>🖼️ Academy Logo</h3>
+        <div class="upload-circle" onclick="document.getElementById('logoInput').click()"><span id="logoPlaceholder">🏏</span><img id="logoPreview" src="" style="display:none"><div class="upload-hint">📷</div></div>
+        <input type="file" id="logoInput" accept="image/*" style="display:none" onchange="previewLogo(event)">
+        <div class="btn-center"><button class="btn btn-green" onclick="saveLogo()">💾 Save</button><button class="btn btn-red" onclick="removeLogo()">🔄 Remove</button></div>
+        <div class="msg" id="logoMsg">✅ Logo saved!</div>
+    </div>
+
+    <div class="section"><h3>📷 Payment Scanner</h3>
+        <div class="scanner-box" id="scannerBox" onclick="document.getElementById('scannerInput').click()"><div id="scannerPlaceholder"><span style="font-size:2.5rem">📱</span><p style="font-weight:600">Click to Upload</p><button type="button" class="btn btn-blue">📁 Choose</button></div>
+        <input type="file" id="scannerInput" accept="image/*" style="display:none" onchange="previewScanner(event)">
+        <div class="scanner-preview" id="scannerPreview"><img id="scannerPreviewImg" src=""><p id="scannerFileName" style="font-size:.8rem;color:#2e7d32;font-weight:600;margin-top:.3rem"></p><button class="btn btn-gold" onclick="event.stopPropagation();document.getElementById('scannerInput').click()">🔄 Change</button><button class="btn btn-red" onclick="event.stopPropagation();removeScanner()">✕ Remove</button></div></div>
+        <div class="btn-center"><button class="btn btn-green" onclick="saveScanner()">💾 Save</button><button class="btn btn-red" onclick="removeScanner()">🔄 Remove</button></div>
+        <div class="msg" id="scannerMsg">✅ Scanner saved!</div>
+    </div>
+
+    <div class="section"><h3>⚙️ Settings</h3>
+        <label>📱 UPI ID:</label><input type="text" id="upiId" value="9606743437@upi">
+        <label>📞 Phone:</label><input type="text" id="academyPhone" value="+91-9606743437">
+        <label>📧 Email:</label><input type="text" id="academyEmail" value="ynsportsforexcellence@gmail.com">
+        <label>📍 Address:</label><input type="text" id="academyAddress" value="Varthur, Bangalore - 560087">
+        <div class="btn-center"><button class="btn btn-blue" onclick="saveSettings()">💾 Save</button></div>
+        <div class="msg" id="settingsMsg">✅ Saved!</div>
+    </div>
+
+    <div class="section"><h3>👕 Jersey</h3>
+        <div class="row"><span>New:</span><span style="color:#c41e3a;font-weight:700">Mandatory ₹1000</span></div>
+        <div class="row"><span>Old:</span><label style="display:flex;align-items:center;gap:.3rem;margin:0"><input type="checkbox" id="oldJerseyOptional" checked onchange="saveJerseySetting()"><span style="color:#2e7d32;font-weight:700">Optional</span></label></div>
+    </div>
+
+    <div class="section"><h3>🔗 Form Link</h3>
+        <div class="link-box" id="formLink">https://jeyabalp1983.github.io/yn-hoodi-registration/</div>
+        <div class="btn-center"><button class="btn btn-gold" onclick="navigator.clipboard.writeText(document.getElementById('formLink').textContent.trim()).then(()=>alert('✅ Copied!'))">📋 Copy</button></div>
+    </div>
+</div>
+
+<script>
+window.onload=function(){
+    const logo=localStorage.getItem('ynHoodiLogo');if(logo){document.getElementById('logoPreview').src=logo;document.getElementById('logoPreview').style.display='block';document.getElementById('logoPlaceholder').style.display='none'}
+    const scanner=localStorage.getItem('ynHoodiScanner');if(scanner){document.getElementById('scannerPreviewImg').src=scanner;document.getElementById('scannerFileName').textContent='✅ Scanner';document.getElementById('scannerPreview').style.display='block';document.getElementById('scannerPlaceholder').style.display='none'}
+    const s=JSON.parse(localStorage.getItem('ynHoodiSettings')||'{}');if(s.upiId)document.getElementById('upiId').value=s.upiId;if(s.phone)document.getElementById('academyPhone').value=s.phone;if(s.email)document.getElementById('academyEmail').value=s.email;if(s.address)document.getElementById('academyAddress').value=s.address;if(s.oldJerseyOptional!==undefined)document.getElementById('oldJerseyOptional').checked=s.oldJerseyOptional
+};
+function previewLogo(e){const f=e.target.files[0];if(!f)return;if(f.size>2*1024*1024){alert('Max 2MB!');return}const r=new FileReader();r.onload=function(ev){document.getElementById('logoPreview').src=ev.target.result;document.getElementById('logoPreview').style.display='block';document.getElementById('logoPlaceholder').style.display='none'};r.readAsDataURL(f)}
+function saveLogo(){const i=document.getElementById('logoPreview');if(!i.src||i.style.display==='none'){alert('Choose logo!');return}localStorage.setItem('ynHoodiLogo',i.src);const m=document.getElementById('logoMsg');m.classList.add('show');setTimeout(()=>m.classList.remove('show'),3000)}
+function removeLogo(){localStorage.removeItem('ynHoodiLogo');document.getElementById('logoPreview').src='';document.getElementById('logoPreview').style.display='none';document.getElementById('logoPlaceholder').style.display='block';document.getElementById('logoInput').value=''}
+function previewScanner(e){e.stopPropagation();const f=e.target.files[0];if(!f)return;if(!['image/jpeg','image/png','image/webp'].includes(f.type)){alert('JPG/PNG/WebP!');return}if(f.size>5*1024*1024){alert('Max 5MB!');return}const r=new FileReader();r.onload=function(ev){document.getElementById('scannerPreviewImg').src=ev.target.result;document.getElementById('scannerFileName').textContent='✅ '+f.name;document.getElementById('scannerPreview').style.display='block';document.getElementById('scannerPlaceholder').style.display='none'};r.readAsDataURL(f)}
+function saveScanner(){const i=document.getElementById('scannerPreviewImg');if(!i.src||document.getElementById('scannerPreview').style.display==='none'){alert('Upload first!');return}localStorage.setItem('ynHoodiScanner',i.src);const m=document.getElementById('scannerMsg');m.classList.add('show');setTimeout(()=>m.classList.remove('show'),3000)}
+function removeScanner(){localStorage.removeItem('ynHoodiScanner');document.getElementById('scannerPreviewImg').src='';document.getElementById('scannerPreview').style.display='none';document.getElementById('scannerPlaceholder').style.display='block';document.getElementById('scannerInput').value=''}
+function saveSettings(){const s={upiId:document.getElementById('upiId').value,phone:document.getElementById('academyPhone').value,email:document.getElementById('academyEmail').value,address:document.getElementById('academyAddress').value,oldJerseyOptional:document.getElementById('oldJerseyOptional').checked};localStorage.setItem('ynHoodiSettings',JSON.stringify(s));const m=document.getElementById('settingsMsg');m.classList.add('show');setTimeout(()=>m.classList.remove('show'),3000)}
+function saveJerseySetting(){const s=JSON.parse(localStorage.getItem('ynHoodiSettings')||'{}');s.oldJerseyOptional=document.getElementById('oldJerseyOptional').checked;localStorage.setItem('ynHoodiSettings',JSON.stringify(s))}
+</script>
+</body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YN Cricket Academy (Hoodi) - Registration & Payment 2026-27</title>
+    <style>
+        :root{--red:#c41e3a;--gold:#d4af37;--green:#1b5e20}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:linear-gradient(135deg,#0d4f1a,#1a6b2e,#0a3d14,#1b5e20);background-size:400% 400%;animation:bg 20s ease infinite;font-family:'Segoe UI',system-ui,sans-serif;padding:1.5rem 1rem;display:flex;flex-direction:column;align-items:center;min-height:100vh}
+        @keyframes bg{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+        .main{max-width:850px;width:100%}
+        .header{background:linear-gradient(180deg,#1a4d2e,#0a2f1f);border-radius:2rem 2rem 0 0;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;border:2px solid var(--gold);border-bottom:3px solid var(--red)}
+        .hlogo{width:45px;height:45px;border-radius:50%;border:2px solid var(--gold);object-fit:cover;display:none}
+        .hlogo.show{display:block}
+        .htitle{color:#ffd966;font-weight:800;font-size:1rem}
+        .idbox{background:#000;color:#00ff41;font-family:'Courier New',monospace;padding:.5rem 1.2rem;border-radius:2rem;font-weight:700;font-size:.85rem;border:2px solid var(--gold);text-shadow:0 0 10px #00ff41}
+        .formbox{background:linear-gradient(180deg,#faf6ed,#f5edd6);border-radius:0 0 3rem 3rem;box-shadow:0 25px 50px rgba(0,0,0,0.5),0 0 0 3px var(--gold);padding:2rem;border:2px solid var(--gold);border-top:2px dashed var(--gold)}
+        .flogo{text-align:center;margin-bottom:1rem}
+        .flogo img{width:100px;height:100px;border-radius:50%;border:3px solid var(--gold);object-fit:cover;box-shadow:0 5px 15px rgba(0,0,0,0.3);display:none}
+        .flogo img.show{display:inline-block}
+        h2{text-align:center;color:#1a3d1a;margin:1rem 0;font-weight:800;font-size:1.4rem;border-bottom:3px dashed #c41e3a;padding-bottom:.5rem}
+        .grid{display:flex;flex-direction:column;gap:1rem}
+        .sec{font-weight:700;color:#fff;background:var(--red);padding:.4rem 1rem;border-radius:2rem;display:inline-block;font-size:.85rem}
+        .inp{display:flex;flex-direction:column;gap:.2rem}
+        .inp label{font-weight:600;color:#2d4a22;font-size:.8rem}
+        .req{color:#c41e3a}
+        input,select,textarea{padding:.7rem 1rem;border:2px solid #c9a94b;border-radius:1.5rem;font-size:.9rem;background:#fffef7;outline:0;font-family:inherit}
+        input:focus,select:focus,textarea:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(196,30,58,.15)}
+        .r2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        .r3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+        .days{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.2rem}
+        .day{background:#fffbec;padding:.4rem .8rem;border-radius:2rem;border:1px solid #c9a94b;cursor:pointer;font-weight:500;font-size:.85rem;user-select:none}
+        .day.sel{background:var(--red);color:#fff;border-color:#8b0000}
+        .day.dis{opacity:.6;cursor:not-allowed}
+        .day input{display:none}
+        .fee{background:linear-gradient(135deg,#fff8e7,#fef3d0);border-radius:1.2rem;padding:1rem;border-left:5px solid var(--red);font-weight:600}
+        .frow{display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;font-size:.85rem;margin-top:.3rem}
+        .btn{background:linear-gradient(180deg,#c41e3a,#8b0000);border:0;padding:.9rem;border-radius:3rem;font-weight:700;font-size:1.1rem;color:#fff;cursor:pointer;border:2px solid var(--gold);width:100%;text-transform:uppercase}
+        .btn:hover{filter:brightness(1.1)}
+        .btn:disabled{opacity:.5;cursor:not-allowed}
+        .ok{display:none;background:#e8f5e9;border:2px solid #2e7d32;border-radius:1.5rem;padding:1.5rem;text-align:center}
+        .ok.show{display:block}
+        .load{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:999;justify-content:center;align-items:center;flex-direction:column}
+        .load.on{display:flex}
+        .spin{width:50px;height:50px;border:5px solid #d4af37;border-top-color:#c41e3a;border-radius:50%;animation:spin 1s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .payment-box{background:#f0f7e6;border-radius:1.5rem;padding:1.5rem;text-align:center;border:2px dashed var(--gold);margin:1rem 0}
+        .payment-box h3{color:#1a3d1a;margin-bottom:.5rem}
+        .qr-container{display:inline-block;padding:1rem;background:#fff;border-radius:1rem;border:2px solid var(--gold);margin:.5rem 0}
+        .qr-container img{border-radius:.5rem}
+        .upi-link-btn{display:inline-block;background:#25D366;color:#fff;padding:.8rem 2rem;border-radius:2rem;text-decoration:none;font-weight:700;margin:.5rem 0;font-size:1rem;transition:.2s}
+        .upi-link-btn:hover{background:#1ebe5d;transform:translateY(-2px)}
+        .upi-id-text{font-size:1.1rem;color:#c41e3a;font-weight:700;margin:.3rem 0}
+        .upbox{border:2px dashed #d4af37;border-radius:1.5rem;padding:1.5rem;text-align:center;background:#fffef7;cursor:pointer}
+        .upbox:hover{border-color:#25D366}
+        .prev{display:none}
+        .prev img{max-width:100%;max-height:250px;border-radius:1rem;border:2px solid #25D366}
+        .note{background:#fcf5e3;border-radius:1rem;padding:1rem;border:1px solid #deb887;font-size:.8rem;line-height:1.5}
+        .note ul{margin-top:.3rem;padding-left:1.2rem}
+        .jm{background:#fff3cd;border:1px solid #ffc107;border-radius:.5rem;padding:.5rem;margin-top:.3rem;font-size:.8rem;color:#856404;font-weight:600}
+        .jo{background:#e8f5e9;border:1px solid #4caf50;border-radius:.5rem;padding:.5rem;margin-top:.3rem;font-size:.8rem;color:#2e7d32;font-weight:600}
+        @media(max-width:600px){.r2,.r3{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+<div class="load" id="loading"><div class="spin"></div><p style="color:#ffd966;margin-top:1rem;font-weight:700">Processing...</p></div>
+
+<div class="main">
+    <div class="header">
+        <div style="display:flex;align-items:center;gap:.8rem">
+            <img class="hlogo" id="hlogo" src=""><span class="htitle">🏏 YN CRICKET ACADEMY (HOODI)</span>
+        </div>
+        <div class="idbox" id="idDisplay">YN-Hoodi-202627-0005</div>
+    </div>
+
+    <div class="formbox">
+        <div class="flogo"><img id="flogo" src=""></div>
+        <h2>📋 YN CRICKET ACADEMY REGISTRATION & PAYMENT - 2026-27</h2>
+
+        <div class="ok" id="okMsg">
+            <h3 style="color:#2e7d32">✅ REGISTRATION SUCCESSFUL!</h3>
+            <p>Student ID: <strong id="okId" style="color:#c41e3a;font-size:1.2rem"></strong></p>
+            <p>📧 Confirmation email sent to your registered email</p>
+            <p id="okContact" style="font-size:.85rem;color:#666"></p>
+            <button onclick="resetForm()" style="margin-top:1rem;padding:.5rem 2rem;border-radius:2rem;background:#c41e3a;color:#fff;border:0;cursor:pointer;font-weight:700">Register Another Student</button>
+        </div>
+
+        <form id="form" onsubmit="return submitForm(event)" novalidate>
+        <div class="grid" id="formContent">
+            <div class="inp"><label>🆔 Student ID (Auto-Generated)</label><input type="text" id="sid" readonly style="background:#e8f5e9;font-weight:700;font-family:'Courier New',monospace"></div>
+
+            <span class="sec">👤 PERSONAL DETAILS</span>
+            <div class="r2">
+                <div class="inp"><label>Student Full Name <span class="req">*</span></label><input type="text" id="sname" placeholder="Enter full name" required></div>
+                <div class="inp"><label>Parent / Guardian Name <span class="req">*</span></label><input type="text" id="pname" placeholder="Father/Mother/Guardian" required></div>
+            </div>
+            <div class="r3">
+                <div class="inp"><label>🎂 Age <span class="req">*</span></label><input type="number" id="age" min="5" max="25" placeholder="Years" required></div>
+                <div class="inp"><label>📅 Date of Birth <span class="req">*</span></label><input type="date" id="dob" required></div>
+                <div class="inp"><label>📱 Mobile Number <span class="req">*</span></label><input type="tel" id="mobile" placeholder="10-digit" pattern="[0-9]{10}" required></div>
+            </div>
+            <div class="inp"><label>📧 Email ID (for confirmation) <span class="req">*</span></label><input type="email" id="email" placeholder="email@example.com" required></div>
+            <div class="inp"><label>📍 Address <span class="req">*</span></label><textarea id="address" rows="2" placeholder="Full address" required></textarea></div>
+
+            <div style="display:flex;align-items:center;gap:1rem;background:#e6f0da;padding:.5rem 1rem;border-radius:2rem">
+                <label style="margin:0;display:flex;align-items:center;gap:.5rem"><input type="checkbox" id="oldStudent" onchange="updateAll()"> ⭐ Old Student (Reg. fee already paid)</label>
+                <span id="regDisp" style="font-weight:700;margin-left:auto">Reg: ₹500</span>
+            </div>
+
+            <span class="sec">📅 QUARTER & DATES (Quarterly Admissions)</span>
+            <div class="r2">
+                <div class="inp"><label>Select Quarter <span class="req">*</span></label>
+                    <select id="quarter" required onchange="updateAll()">
+                        <option value="">-- Choose Quarter --</option>
+                        <option value="Q1">Q1: 1st Jun – 30th Sep 2026</option>
+                        <option value="Q2">Q2: 1st Oct – 31st Dec 2026</option>
+                        <option value="Q3">Q3: 1st Jan – 31st Mar 2027</option>
+                        <option value="full">Full Season (Jun 2026 – Mar 2027) 🔥10% OFF</option>
+                    </select>
+                </div>
+                <div class="inp"><label>Start Date (Joining) <span class="req">*</span></label><input type="date" id="startDate" required onchange="updateAll()"></div>
+            </div>
+            <div class="inp"><label>📅 End Date (Auto-Calculated)</label><input type="text" id="endDate" readonly style="background:#f5f5f5;font-weight:600;color:#c41e3a"></div>
+
+            <div class="inp"><label>⚡ Batch (Days/Week) <span class="req">*</span></label>
+                <select id="batchDays" required onchange="updateAll()">
+                    <option value="">-- Select Batch --</option>
+                    <option value="2">2 Days / week</option>
+                    <option value="3">3 Days / week</option>
+                    <option value="4">4 Days / week</option>
+                </select>
+                <small style="color:#c41e3a;font-weight:600">⚠️ Batch cannot be changed once selected</small>
+            </div>
+
+            <div class="inp"><label>🗓️ Coaching Days (Thu–Sun) <span class="req">*</span></label>
+                <div class="days" id="dayChips">
+                    <label class="day"><input type="checkbox" class="dsel" value="Thursday"> Thu</label>
+                    <label class="day"><input type="checkbox" class="dsel" value="Friday"> Fri</label>
+                    <label class="day"><input type="checkbox" class="dsel" value="Saturday"> Sat</label>
+                    <label class="day"><input type="checkbox" class="dsel" value="Sunday"> Sun</label>
+                </div>
+                <small id="dayHint" style="color:#8b6f30">Select days matching your batch</small>
+            </div>
+
+            <div style="background:#f0f7e6;border-radius:1rem;padding:.8rem">
+                <strong>👕 Jersey - Mandatory for ALL Students</strong>
+                <p style="font-size:.8rem;margin:.3rem 0">All students must wear academy jersey during coaching and matches</p>
+                <div id="jerseyNew"><div class="jm">✅ Jersey Fee: ₹1000 (Mandatory - included in total)</div></div>
+                <div id="jerseyOld" style="display:none">
+                    <label style="display:flex;align-items:center;gap:.5rem;margin-top:.3rem"><input type="checkbox" id="needJersey" onchange="updateAll()"> I need Jersey - ₹1000</label>
+                    <div class="jo">✅ Old students: Jersey is optional if you already have one</div>
+                </div>
+                <label style="display:flex;align-items:center;gap:.5rem;margin-top:.3rem"><input type="checkbox" id="extraJersey" onchange="updateAll()"> Extra jersey pair +₹1000 (Collect from coaches)</label>
+            </div>
+
+            <div class="fee">
+                <div style="display:flex;justify-content:space-between"><span>📊 TOTAL FEE:</span><strong id="grandTotal" style="font-size:1.3rem;color:#8b0000">₹0</strong></div>
+                <div class="frow"><span>🎓 Coaching: <span id="coachingFee">₹0</span></span><span>👕 Jersey: <span id="jerseyFee">₹0</span></span><span>📋 Reg: <span id="regFee">₹500</span></span></div>
+                <div id="discountNote" style="font-size:.8rem;color:#1e4a2d"></div>
+            </div>
+
+            <div class="payment-box" id="paymentSection">
+                <h3>📱 Scan & Pay via UPI</h3>
+                <div class="qr-container" id="qrcode"></div>
+                <div id="upiLink"></div>
+                <p class="upi-id-text">UPI ID: <span id="upiIdDisplay">9606743437@upi</span></p>
+                <p style="font-size:.75rem;color:#c41e3a">⚠️ Upload payment screenshot below after payment</p>
+            </div>
+
+            <span class="sec">💳 PAYMENT DETAILS</span>
+            <div class="r2">
+                <div class="inp"><label>Payment Mode <span class="req">*</span></label><select id="paymentMode" required><option value="">-- Select --</option><option value="UPI">UPI (GPay/PhonePe/Paytm)</option><option value="Cash">Cash</option></select></div>
+                <div class="inp"><label>Paid Date <span class="req">*</span></label><input type="date" id="paidDate" required></div>
+            </div>
+
+            <div class="inp"><label>🧾 Upload Payment Screenshot <span class="req">*</span></label>
+                <div class="upbox" id="uploadArea" onclick="document.getElementById('receipt').click()">
+                    <div id="uploadPH"><span style="font-size:3rem">📷</span><p style="font-weight:600;color:#2d4a22">Click Here to Upload Payment Screenshot</p><p style="font-size:.8rem;color:#666">Take a photo or select from your gallery</p><button type="button" style="background:#25D366;color:#fff;border:0;padding:.5rem 1.5rem;border-radius:2rem;cursor:pointer;font-weight:600;margin-top:.5rem">📱 Choose File / Take Photo</button></div>
+                    <input type="file" id="receipt" accept="image/*" capture="environment" style="display:none" onchange="previewReceipt(event)">
+                    <div class="prev" id="receiptPreview"><img id="receiptImg" src=""><p id="receiptName" style="font-size:.9rem;color:#2e7d32;font-weight:600;margin-top:.5rem"></p><button type="button" onclick="event.stopPropagation();document.getElementById('receipt').click()" style="background:#d4af37;color:#0a2f1f;border:0;padding:.3rem .8rem;border-radius:1.5rem;cursor:pointer;font-weight:600;font-size:.75rem">🔄 Change</button> <button type="button" onclick="event.stopPropagation();removeReceipt()" style="background:#c41e3a;color:#fff;border:0;padding:.3rem .8rem;border-radius:1.5rem;cursor:pointer;font-weight:600;font-size:.75rem">✕ Remove</button></div>
+                </div>
+                <small style="color:#666;font-size:.75rem">Supported: JPG, PNG, WebP (Max 10MB)</small>
+            </div>
+
+            <div class="inp"><label>🔢 Transaction ID (Optional)</label><input type="text" id="txnId" placeholder="UPI reference number"></div>
+
+            <span class="sec">🏏 COACHING INFO</span>
+            <div class="r2">
+                <div class="inp"><label>Previous Experience</label><select id="experience"><option value="">-- Select --</option><option value="beginner">Beginner</option><option value="school">School Level</option><option value="club">Club/Academy</option><option value="district">District/State</option></select></div>
+                <div class="inp"><label>Batting/Bowling Style</label><input type="text" id="playingStyle" placeholder="e.g., RHB, Off-spin"></div>
+            </div>
+            <div class="inp"><label>🩺 Medical Conditions</label><input type="text" id="medical" placeholder="If any, or type 'None'"></div>
+
+            <div class="note">
+                <strong>📌 TERMS & CONDITIONS:</strong>
+                <ul>
+                    <li>📅 <strong>Admissions are on Quarterly basis:</strong> Q1: Jun-Sep | Q2: Oct-Dec | Q3: Jan-Mar</li>
+                    <li>❌ <strong>No compensatory classes</strong> for missed sessions</li>
+                    <li>🚫 <strong>No change of Batch</strong> allowed once selected</li>
+                    <li>👕 <strong>Jersey is MANDATORY</strong> for all students. Must wear academy jersey</li>
+                    <li>🏏 <strong>Matches</strong> conducted on weekends. Charges based on ground/overs</li>
+                    <li>💰 Fees are non-refundable and non-transferable</li>
+                </ul>
+                <p style="margin-top:.5rem;font-size:.8rem">
+                    📞 <strong>+91-9606743437</strong> | 📧 <strong>ynsportsforexcellence@gmail.com</strong><br>
+                    📍 <strong>Varthur, Bangalore - 560087</strong>
+                </p>
+                <label style="margin-top:.8rem;display:flex;align-items:center;gap:.5rem;font-size:.9rem"><input type="checkbox" id="consent" required> <strong>✅ I agree to all terms & conditions</strong></label>
+            </div>
+
+            <button type="submit" class="btn" id="submitBtn">🏏 SUBMIT REGISTRATION</button>
+        </div>
+        </form>
+    </div>
+</div>
+
+<script>
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzThWWoZ9OHrrm4_OeTeQmqWXr0A2fgjA6DQbFM45il7x_n_Q1-g7MmR4BLBMxj83wC/exec';
+const UPI_ID = '0798121A0079936.bqr@kotak';
+const ACADEMY_NAME = 'YN Cricket Academy Hoodi';
+const ACADEMY_PHONE = '+91-9606743437';
+const ACADEMY_EMAIL = 'ynsportsforexcellence@gmail.com';
+const ACADEMY_ADDRESS = 'Varthur, Bangalore - 560087';
+
+const qd={Q1:{s:'2026-06-01',e:'2026-09-30',m:4},Q2:{s:'2026-10-01',e:'2026-12-31',m:3},Q3:{s:'2027-01-01',e:'2027-03-31',m:3}};
+const mf={2:3750,3:4000,4:4250};
+
+const settings=JSON.parse(localStorage.getItem('ynHoodiSettings')||'{}');
+const savedLogo=localStorage.getItem('ynHoodiLogo');
+if(savedLogo){document.getElementById('hlogo').src=savedLogo;document.getElementById('hlogo').classList.add('show');document.getElementById('flogo').src=savedLogo;document.getElementById('flogo').classList.add('show');}
+if(settings.upiId)document.getElementById('upiIdDisplay').textContent=settings.upiId;
+document.getElementById('okContact').textContent='📞 '+(settings.phone||ACADEMY_PHONE)+' | 📧 '+(settings.email||ACADEMY_EMAIL);
+
+// ID: YN-Hoodi-202627-XXXX
+function nid(){let l=parseInt(localStorage.getItem('ynHoodiLastId'))||4;let n=l+1;localStorage.setItem('ynHoodiLastId',n);return'YN-Hoodi-202627-'+String(n).padStart(4,'0')}
+if(!localStorage.getItem('ynHoodiLastId'))localStorage.setItem('ynHoodiLastId','4');
+let cid=nid();document.getElementById('sid').value=cid;document.getElementById('idDisplay').textContent=cid;
+
+const chips=document.querySelectorAll('.day'),dchecks=document.querySelectorAll('.dsel');
+chips.forEach(c=>{c.addEventListener('click',function(){const cb=this.querySelector('input');if(cb.disabled)return;cb.checked=!cb.checked;this.classList.toggle('sel',cb.checked);updateAll()})});
+function sc(){chips.forEach(c=>{const cb=c.querySelector('input');c.classList.toggle('sel',cb.checked);c.classList.toggle('dis',cb.disabled)})}
+
+function cf(q,d,sd){
+    if(!q||!d||!sd)return{f:0,e:''};
+    if(q==='full')return{f:Math.round(((mf[d]*4)+(mf[d]*3)+(mf[d]*3))*.9),e:'2027-03-31'};
+    const x=qd[q];if(!x)return{f:0,e:''};
+    const qs=new Date(x.s),qe=new Date(x.e),jd=new Date(sd);
+    if(jd>qe)return{f:0,e:''};
+    if(jd<=qs)return{f:mf[d]*x.m,e:x.e};
+    const rem=Math.ceil((qe-jd)/86400000),tot=Math.ceil((qe-qs)/86400000);
+    return{f:Math.round((mf[d]*x.m)*(rem/tot)/100)*100,e:x.e};
+}
+
+function generateQR(amount, quarterText) {
+    const qrDiv = document.getElementById('qrcode');
+    const upiLinkDiv = document.getElementById('upiLink');
+    const upiId = settings.upiId || UPI_ID;
+    const note = `YN Hoodi ${quarterText}`;
+    const upiUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(ACADEMY_NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+    qrDiv.innerHTML = ''; upiLinkDiv.innerHTML = '';
+    if (amount > 0) {
+        const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&color=1b5e20&bgcolor=FFFFFF&data=${encodeURIComponent(upiUrl)}`;
+        const qrImg = document.createElement('img'); qrImg.src = qrImageUrl; qrImg.width = 200; qrImg.height = 200; qrImg.style.borderRadius = '8px';
+        qrDiv.appendChild(qrImg);
+        const upiLink = document.createElement('a'); upiLink.href = upiUrl; upiLink.className = 'upi-link-btn'; upiLink.textContent = '📱 Pay ₹' + amount.toLocaleString('en-IN') + ' via UPI';
+        upiLinkDiv.appendChild(upiLink);
+    }
+}
+
+function updateAll(){
+    const q=document.getElementById('quarter').value,d=document.getElementById('batchDays').value,sd=document.getElementById('startDate').value;
+    const os=document.getElementById('oldStudent').checked,ej=document.getElementById('extraJersey').checked;
+    const jOpt=settings.oldJerseyOptional!==false;
+    if(d==='4'){dchecks.forEach(c=>{c.checked=true;c.disabled=true})}else{dchecks.forEach(c=>{c.disabled=false})}
+    sc();
+    if(os&&jOpt){document.getElementById('jerseyNew').style.display='none';document.getElementById('jerseyOld').style.display='block'}else{document.getElementById('jerseyNew').style.display='block';document.getElementById('jerseyOld').style.display='none';document.getElementById('needJersey').checked=true}
+    const r=cf(q,d,sd);
+    const nj=os&&jOpt?document.getElementById('needJersey').checked:true;
+    const jt=!nj?0:(ej?2000:1000);
+    const rf=os?0:500;
+    const gt=r.f+jt+rf;
+    document.getElementById('coachingFee').textContent='₹'+r.f.toLocaleString('en-IN');
+    document.getElementById('jerseyFee').textContent='₹'+jt;
+    document.getElementById('regFee').textContent='₹'+rf;
+    document.getElementById('grandTotal').textContent='₹'+gt.toLocaleString('en-IN');
+    document.getElementById('regDisp').textContent='Reg: ₹'+rf;
+    document.getElementById('endDate').value=r.e?new Date(r.e).toLocaleDateString('en-IN',{year:'numeric',month:'long',day:'numeric'}):'';
+    document.getElementById('discountNote').innerHTML=q==='full'?'✅ 10% Full Season Discount!':(r.f<mf[d]*qd[q]?.m?'⚡ Pro-rated fee for mid-quarter joining':'');
+    const quarterText = q==='full'?'Full Season':(qd[q]?qd[q].s+' to '+qd[q].e:'');
+    generateQR(gt, quarterText);
+}
+
+function previewReceipt(e){e.stopPropagation();const f=e.target.files[0];if(!f)return;if(!['image/jpeg','image/png','image/webp'].includes(f.type)){alert('JPG/PNG/WebP!');return}if(f.size>10*1024*1024){alert('Max 10MB!');return}const r=new FileReader();r.onload=function(ev){document.getElementById('receiptImg').src=ev.target.result;document.getElementById('receiptName').textContent='✅ '+f.name;document.getElementById('receiptPreview').style.display='block';document.getElementById('uploadPH').style.display='none';document.getElementById('uploadArea').style.borderColor='#25D366'};r.readAsDataURL(f)}
+function removeReceipt(){document.getElementById('receipt').value='';document.getElementById('receiptPreview').style.display='none';document.getElementById('uploadPH').style.display='block';document.getElementById('uploadArea').style.borderColor='#d4af37'}
+
+async function submitForm(e){
+    e.preventDefault();
+    if(!document.getElementById('consent').checked){alert('Please agree to terms');return false}
+    const d=document.getElementById('batchDays').value;
+    if(d&&d!=='4'&&document.querySelectorAll('.dsel:checked').length!==parseInt(d)){alert('Select '+d+' days');return false}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value)){alert('Valid email!');return false}
+    document.getElementById('loading').classList.add('on');document.getElementById('submitBtn').disabled=true;
+    const os=document.getElementById('oldStudent').checked;
+    const jOpt=settings.oldJerseyOptional!==false;
+    const nj=os&&jOpt?document.getElementById('needJersey').checked:true;
+    const q=document.getElementById('quarter').value,da=document.getElementById('batchDays').value,sd=document.getElementById('startDate').value;
+    const r=cf(q,da,sd);
+    const jt=!nj?0:(document.getElementById('extraJersey').checked?2000:1000);
+    const rf=os?0:500;
+    const gt=r.f+jt+rf;
+    const data={
+        studentId:cid,timestamp:new Date().toISOString(),
+        studentName:document.getElementById('sname').value,
+        parentName:document.getElementById('pname').value,
+        age:document.getElementById('age').value,dob:document.getElementById('dob').value,
+        mobile:document.getElementById('mobile').value,email:document.getElementById('email').value,
+        address:document.getElementById('address').value,
+        oldStudent:os,quarter:q,
+        planDetail:q==='full'?'Full Season':(qd[q]?.s+' to '+qd[q]?.e),
+        batch:da+' days/week',
+        selectedDays:Array.from(document.querySelectorAll('.dsel:checked')).map(c=>c.value).join(', '),
+        startDate:sd,endDate:r.e,
+        coachingFee:r.f,jerseyFee:jt,regFee:rf,totalFee:gt,
+        paymentMode:document.getElementById('paymentMode').value,
+        paidDate:document.getElementById('paidDate').value,
+        receiptFileName:document.getElementById('receipt').files[0]?.name||'N/A',
+        transactionId:document.getElementById('txnId').value||'N/A',
+        experience:document.getElementById('experience').value,
+        playingStyle:document.getElementById('playingStyle').value,
+        medical:document.getElementById('medical').value||'None',consent:true
+    };
+    try{await fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})}catch(err){}
+    setTimeout(()=>{
+        document.getElementById('loading').classList.remove('on');
+        document.getElementById('formContent').style.display='none';
+        document.getElementById('okMsg').classList.add('show');
+        document.getElementById('okId').textContent=cid;
+    },1500);
+    return false;
+}
+
+function resetForm(){
+    document.getElementById('form').reset();document.getElementById('formContent').style.display='flex';
+    document.getElementById('okMsg').classList.remove('show');document.getElementById('submitBtn').disabled=false;
+    removeReceipt();cid=nid();document.getElementById('sid').value=cid;document.getElementById('idDisplay').textContent=cid;
+    dchecks.forEach(c=>{c.checked=false;c.disabled=false});sc();updateAll();
+    document.getElementById('paidDate').value=new Date().toISOString().split('T')[0];
+}
+
+window.onload=function(){document.getElementById('paidDate').value=new Date().toISOString().split('T')[0];document.getElementById('dob').max=new Date().toISOString().split('T')[0];updateAll()};
+['quarter','batchDays'].forEach(id=>document.getElementById(id).addEventListener('change',updateAll));
+document.getElementById('startDate').addEventListener('change',updateAll);
+document.getElementById('oldStudent').addEventListener('change',updateAll);
+document.getElementById('extraJersey').addEventListener('change',updateAll);
+document.getElementById('needJersey').addEventListener('change',updateAll);
+</script>
+</body>
+</html>
